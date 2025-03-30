@@ -7,3 +7,4 @@ dist
 *.db
 .cursor/
 .cursor/mcp.json
+issue.md
