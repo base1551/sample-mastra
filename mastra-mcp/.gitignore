@@ -5,3 +5,5 @@ dist
 .env.development
 .env
 *.db
+.cursor/
+.cursor/mcp.json

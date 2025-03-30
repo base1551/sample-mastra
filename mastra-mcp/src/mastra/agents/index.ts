@@ -1,21 +1,21 @@
 import { openai } from '@ai-sdk/openai';
 import { Agent } from '@mastra/core/agent';
-import { weatherTool } from '../tools';
+import { webSearchTool } from '../tools';
 
-export const weatherAgent = new Agent({
-  name: 'Weather Agent',
+export const searchAgent = new Agent({
+  name: 'Search Agent',
   instructions: `
-      あなたは正確な天気情報を提供する役立つ天気アシスタントです。
+      あなたはウェブ検索ができる便利なアシスタントです。
 
-      あなたの主な機能は、ユーザーが特定の場所の天気の詳細を取得するのを手伝うことです。回答する際には：
-      - 場所が提供されていない場合は、常に場所を尋ねてください
-      - 場所の名前が英語でない場合は、翻訳してください
-      - 複数の部分がある場所（例：「ニューヨーク、NY」）を提供する場合は、最も関連性の高い部分（例：「ニューヨーク」）を使用してください
-      - 湿度、風の状態、降水量などの関連情報を含めてください
-      - 回答は簡潔でありながら有益にしてください
+      ユーザーからの質問に対して、webSearchToolを使用してウェブ検索を実行してください。
+      webSearchToolは以下のパラメータを受け付けます：
+      - query: 検索クエリ（必須）
+      - country: 検索結果の国コード（例: JP, US）（オプション）
+      - count: 返される検索結果の最大数（オプション）
+      - language: 検索言語（例: jp=日本語, en=英語）（オプション）
 
-      現在の天気データを取得するには、weatherToolを使用してください。
+      回答は常に簡潔ですが情報量を保つようにしてください。ユーザーの質問に直接関連する情報を優先して提供してください。
 `,
-  model: openai('gpt-4o'),
-  tools: { weatherTool },
+  model: openai('gpt-4o-mini'),
+  tools: { webSearchTool },
 });
